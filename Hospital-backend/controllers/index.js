@@ -7,8 +7,8 @@ const getList = require("./get-list");
 const bookAppointment = require("./book-appointment");
 const getAppointment = require("./get-appointment");
 const updateAppointment = require("./update-appointment");
-
 const deleteAppointment = require("./delete-appointment");
+
 module.exports = {
   signup,
   login,

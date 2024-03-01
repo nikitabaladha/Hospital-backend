@@ -1,22 +1,3 @@
-// const express = require("express");
-// const app = express();
-// const cors = require("cors");
-// const bodyParser = require("body-parser");
-// const morgan = require("morgan");
-
-// app.use(cors("*"));
-// app.use(morgan("dev"));
-// app.use(bodyParser.json());
-
-// app.get("/api", (req, res) => {
-//   res.send("Hello Nikita");
-// });
-
-// console.log("Hello");
-// const routes = require("./routes")(app);
-// app.listen(3001);
-
-// =====
 const express = require("express");
 const app = express();
 const cors = require("cors");

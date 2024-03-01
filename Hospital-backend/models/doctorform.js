@@ -35,21 +35,18 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
     },
     mobileNumber: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     dob: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    address: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    addressData1: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    addressData2: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
+
     city: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -63,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     zipCode: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     speciality: {

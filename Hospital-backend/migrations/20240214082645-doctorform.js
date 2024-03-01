@@ -32,21 +32,18 @@ module.exports = {
         unique: true,
       },
       mobileNumber: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       dob: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      address: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      addressData1: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      addressData2: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
+
       city: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -60,7 +57,7 @@ module.exports = {
         allowNull: false,
       },
       zipCode: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       speciality: {
@@ -75,6 +72,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

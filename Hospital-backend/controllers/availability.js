@@ -7,8 +7,7 @@ async function availability(req, res) {
 
     if (userType !== "Doctor") {
       return res.status(403).json({
-        error:
-          "Only Doctors are allowed to update availability.",
+        error: "Only Doctors are allowed to update availability.",
       });
     }
 

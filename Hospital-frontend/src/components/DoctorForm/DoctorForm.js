@@ -7,8 +7,7 @@ const DoctorForm = ({
   email,
   mobileNumber,
   dob,
-  addressData1,
-  addressData2,
+  address,
   city,
   state,
   country,
@@ -73,24 +72,16 @@ const DoctorForm = ({
         />
       </div>
       <div>
-        <label htmlFor="addressData1">Address data 1:</label>
+        <label htmlFor="address">Address:</label>
         <input
           type="text"
-          value={addressData1}
+          value={address}
           onChange={handleOnChange}
-          name="addressData1"
+          name="address"
           required
         />
       </div>
-      <div>
-        <label htmlFor="addressData2">Address data 2:</label>
-        <input
-          type="text"
-          value={addressData2}
-          onChange={handleOnChange}
-          name="addressData2"
-        />
-      </div>
+
       <div>
         <label htmlFor="city">City:</label>
         <input
@@ -139,7 +130,7 @@ const DoctorForm = ({
           name="speciality"
           required
         >
-          <option value="" disabled defaultValue>
+          <option value="" disabled>
             Select Speciality
           </option>
           <option value="Cardiologist">Cardiologist</option>
@@ -156,7 +147,7 @@ const DoctorForm = ({
           name="qualification"
           required
         >
-          <option value="" disabled defaultValue>
+          <option value="" disabled>
             Select Qualification
           </option>
           <option value="MBBS">MBBS</option>
@@ -184,6 +175,7 @@ const DoctorForm = ({
           required
         />
       </div>
+
       <button type="submit">Submit Form</button>
     </form>
   );

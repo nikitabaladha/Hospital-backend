@@ -25,24 +25,3 @@ const App = () => {
 };
 
 export default App;
-
-// I have this kind of file structure:
-// src
-// |_components
-//   |_Home
-//   |_Navbar
-//   |_SignIn
-//   |_SignUp
-// |_containers
-//   |_Home
-//   |_Navbar
-//   |_SignIn
-//   |_SignUp
-// |_App.js
-
-// Doctor name
-// speciality
-// Experience
-// Email
-// Phone
-// fees

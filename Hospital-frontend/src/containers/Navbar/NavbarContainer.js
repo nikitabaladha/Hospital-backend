@@ -28,7 +28,7 @@ const NavbarContainer = () => {
   };
 
   const handleApplyDoctor = () => {
-    console.log("Apply Doctor logic here");
+    navigate("/doctor-form");
   };
 
   const handleBookAppointment = () => {

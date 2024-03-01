@@ -3,18 +3,11 @@ const models = require("../models");
 
 async function doctorform(req, res) {
   try {
-    debugger;
     const { id, userType } = req.user;
 
-    if (!req.user) {
-      return res
-        .status(401)
-        .json({ error: "User not authenticated", hasError: true });
-    }
-
-    if (userType.toUpperCase() !== "DOCTOR") {
-      return res.status(403).json({
-        error: "Unauthorized. Only doctors can submit doctor forms.",
+    if (userType !== "Doctor") {
+      return res.status(400).json({
+        message: "Unauthorized. Only doctors can submit doctor forms.",
         hasError: true,
       });
     }
@@ -25,8 +18,7 @@ async function doctorform(req, res) {
       email,
       mobileNumber,
       dob,
-      addressData1,
-      addressData2,
+      address,
       city,
       state,
       country,
@@ -36,15 +28,14 @@ async function doctorform(req, res) {
       qualification,
     } = req.body;
 
-    const doctorFormData = await models.doctorforms.create({
+    await models.doctorforms.create({
       userId: id,
       firstName,
       lastName,
       email,
       mobileNumber,
       dob,
-      addressData1,
-      addressData2,
+      address,
       city,
       state,
       country,
@@ -54,12 +45,17 @@ async function doctorform(req, res) {
       qualification,
     });
 
-    return res.status(201).json({
-      doctorFormData,
+    // Return a successful response with the created data
+    return res.status(200).json({
       hasError: false,
+      success: true,
+      message: "Form submitted successfully!",
     });
   } catch (error) {
+    // Log the error for debugging
     console.error("Error during submitting form:", error);
+
+    // Return an internal server error response
     return res
       .status(500)
       .json({ message: "Internal Server Error", hasError: true });
