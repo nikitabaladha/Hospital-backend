@@ -1,4 +1,7 @@
+// migarations/doctorform.js
+
 "use strict";
+
 const { v4: uuidv4 } = require("uuid");
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -17,6 +20,7 @@ module.exports = {
           model: "users",
           key: "id",
         },
+        unique: true,
       },
       firstName: {
         type: Sequelize.STRING,
@@ -25,11 +29,6 @@ module.exports = {
       lastName: {
         type: Sequelize.STRING,
         allowNull: false,
-      },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
       },
       mobileNumber: {
         type: Sequelize.STRING,
@@ -43,7 +42,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-
       city: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -72,7 +70,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-
+      fees: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -88,5 +89,3 @@ module.exports = {
     await queryInterface.dropTable("doctorforms");
   },
 };
-
-// npx sequelize-cli migration:generate --name create_new_table

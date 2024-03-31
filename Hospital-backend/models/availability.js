@@ -1,9 +1,9 @@
+// models/availability
+
 "use strict";
-const { Sequelize } = require("sequelize");
+const { DataTypes, Sequelize } = require("sequelize");
 const { v4: uuidv4 } = require("uuid");
 const model = require("../models");
-const User = require("./user");
-const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   const availability = sequelize.define("availabilities", {

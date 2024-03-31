@@ -1,55 +1,65 @@
-const models = require("../models");
-const bcrypt = require("bcrypt");
+// controllers/login.js
+
 const jwt = require("jsonwebtoken");
+const models = require("../models");
+const saltFunction = require("../validator/saltFunction");
+const config = require("../config/config.js");
 
 async function login(req, res) {
-  const { email, password } = req.body;
-
   try {
-    const userExists = await models.users.findOne({
+    const { email, password } = req.body;
+
+    const user = await models.users.findOne({
       where: { email },
-      attributes: ["email", "password", "id", "userType", "userName"],
       raw: true,
     });
 
-    if (!userExists) {
-      return res.status(400).json({
+    if (!user) {
+      return res.status(404).json({
+        hasError: true,
         message: "Sorry, this user does not exist!",
-        type: "user_not_found",
       });
     }
 
-    const passwordMatch = await bcrypt.compare(password, userExists.password);
+    const isPasswordValid = await saltFunction.validatePassword(
+      password,
+      user.password,
+      user.salt
+    );
 
-    if (!passwordMatch) {
-      return res.status(400).json({
-        message: "Password does not match!",
-        type: "password_mismatch",
+    if (!isPasswordValid) {
+      return res.status(401).json({
+        hasError: true,
+        message: "Invalid password",
       });
     }
 
     const accessToken = jwt.sign(
       {
-        id: userExists.id,
-        email: userExists.email,
-        userType: userExists.userType,
+        userId: user.id,
+        userName: user.userName,
+        email: user.email,
+        userType: user.userType,
       },
-      "12345",
-      { expiresIn: "24h" }
+      config.jwtSecret,
+      {
+        expiresIn: config.jwtExpiration,
+      }
     );
-    return res.status(200).json({
-      data: {
-        accessToken,
-        email: userExists.email,
-        userType: userExists.userType,
-        userName: userExists.userName,
-      },
+
+    res.status(200).json({
+      accessToken,
       hasError: false,
+      message: "Login successful",
     });
   } catch (error) {
-    console.log(error);
     console.error("Error during login:", error);
-    return res.status(500).json({ message: "Internal Server Error" });
+
+    res.status(500).json({
+      hasError: true,
+      message: "Internal server error",
+      error: error.message,
+    });
   }
 }
 

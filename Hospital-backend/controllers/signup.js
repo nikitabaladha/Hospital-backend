@@ -1,12 +1,12 @@
 //controllers/signup.js
 
 const models = require("../models");
-const bcrypt = require("bcrypt");
+const saltFunction = require("../validator/saltFunction.js");
 
 async function signup(req, res) {
-  const { userName, userType, email, password } = req.body;
-
   try {
+    const { userName, userType, email, password } = req.body;
+
     if (!userName)
       return res.status(400).json({ message: "Please provide user name" });
 
@@ -17,37 +17,38 @@ async function signup(req, res) {
       return res.status(400).json({ message: "Please provide user role" });
 
     if (!password)
-      return res.status(400).json({ message: "Please provide  user password" });
+      return res.status(400).json({ message: "Please provide user password" });
 
-    const emailExist = await models.users.findOne({
-      where: { email },
-      attributes: ["email"],
-      raw: true,
-    });
-
-    if (emailExist) {
-      return res.status(400).json({ message: "This user already exists!" });
+    const existingUser = await models.users.findOne({ where: { email } });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ error: "User with this email already exists" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 5);
+    const { hashedPassword, salt } = saltFunction.hashPassword(password);
 
-    await models.users.create({
+    const newUser = await models.users.create({
       userName,
       userType,
       email,
       password: hashedPassword,
+      salt,
     });
 
-    return res
-      .status(200)
-      .json({ hasError: false, success: true, message: "Signup successful!" });
-  } catch (error) {
-    console.log(error);
-    console.error({
-      message: "Error during signup:",
-      errorMessage: error.message,
+    res.status(200).json({
+      hasError: false,
+      message: "User created successfully",
+      data: newUser,
     });
-    return res.status(500).json({ error: "Internal Server Error" });
+  } catch (error) {
+    console.error("Error during signing up:", error);
+
+    res.status(500).json({
+      hasError: true,
+      message: "Internal server error",
+      error: error.message,
+    });
   }
 }
 

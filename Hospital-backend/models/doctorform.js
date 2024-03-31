@@ -1,9 +1,9 @@
+// models/doctorform.js
+
 "use strict";
-const { DataTypes } = require("sequelize");
-const model = require("../models");
-const User = require("./user");
-const { Sequelize } = require("sequelize");
+const { DataTypes, Sequelize } = require("sequelize");
 const { v4: uuidv4 } = require("uuid");
+const model = require("../models");
 
 module.exports = (sequelize, DataTypes) => {
   const doctorform = sequelize.define("doctorforms", {
@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         model: "users",
         key: "id",
       },
+      unique: true,
     },
     firstName: {
       type: DataTypes.STRING,
@@ -28,11 +29,6 @@ module.exports = (sequelize, DataTypes) => {
     lastName: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
     },
     mobileNumber: {
       type: DataTypes.STRING,
@@ -46,7 +42,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-
     city: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -74,6 +69,10 @@ module.exports = (sequelize, DataTypes) => {
     qualification: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    fees: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     createdAt: {
       allowNull: false,

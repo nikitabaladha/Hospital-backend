@@ -1,11 +1,9 @@
+// models/appointments
+
 "use strict";
-const { DataTypes } = require("sequelize");
-const model = require(".");
-
-const User = require("./user");
-const { Sequelize } = require("sequelize");
-
+const { Sequelize, DataTypes } = require("sequelize");
 const { v4: uuidv4 } = require("uuid");
+const model = require("../models");
 
 module.exports = (sequelize, DataTypes) => {
   const appointment = sequelize.define("appointments", {
@@ -43,12 +41,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    
     fees: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-
     status: {
       type: DataTypes.STRING,
       allowNull: false,

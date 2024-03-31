@@ -1,4 +1,7 @@
+// migarations/user.js
+
 "use strict";
+
 const { v4: uuidv4 } = require("uuid");
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -21,8 +24,18 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
       password: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      status: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: "pending",
+      },
+      salt: {
         type: Sequelize.STRING,
         allowNull: false,
       },

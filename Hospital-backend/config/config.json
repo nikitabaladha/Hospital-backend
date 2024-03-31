@@ -5,7 +5,7 @@
     "database": "doctor-patient",
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "log":true
+    "log": true
   },
   "test": {
     "username": "postgres",
@@ -13,7 +13,7 @@
     "database": "doctor-patient",
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "log":true
+    "log": true
   },
   "production": {
     "username": "postgres",
@@ -21,6 +21,6 @@
     "database": "doctor-patient",
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "log":true
+    "log": true
   }
 }

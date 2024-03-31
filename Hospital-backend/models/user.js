@@ -1,10 +1,9 @@
+// models/user.js
+
 "use strict";
-const { DataTypes } = require("sequelize");
-const model = require("../models");
-const Appointment = require("./appointment");
-const DrInfo = require("./drinfo");
-const { Sequelize } = require("sequelize");
 const { v4: uuidv4 } = require("uuid");
+const { DataTypes, Sequelize } = require("sequelize");
+const model = require("../models");
 
 module.exports = (sequelize, DataTypes) => {
   const user = sequelize.define("users", {
@@ -32,6 +31,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "pending",
+    },
+    salt: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
@@ -43,15 +51,15 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   user.associate = (models) => {
-    user.hasMany(models.appointments, {
-      foreignKey: "patientId",
-      as: "PatientAppointments",
+    user.hasMany(models.doctorforms, {
+      foreignKey: "userId",
     });
     user.hasMany(models.appointments, {
       foreignKey: "doctorId",
-      as: "DoctorAppointments",
     });
-    user.hasMany(models.drInfos, { foreignKey: "userId" });
+    user.hasMany(models.appointments, {
+      foreignKey: "patientId",
+    });
   };
   return user;
 };
