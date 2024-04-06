@@ -4,7 +4,7 @@ async function get(req, res) {
   try {
     const { userId } = req.user;
 
-    const { doctorId } = req.body;
+    const { doctorId } = req.params;
 
     if (!doctorId) {
       return res.status(400).json({
@@ -24,7 +24,7 @@ async function get(req, res) {
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       hasError: false,
       message: "Availability data retrieved successfully",
       data: availabilities,
@@ -32,7 +32,9 @@ async function get(req, res) {
   } catch (error) {
     console.error("Error during retrieving availability data:", error);
 
-    res.status(500).json({ hasError: true, message: "Internal Server Error" });
+    return res
+      .status(500)
+      .json({ hasError: true, message: "Internal Server Error" });
   }
 }
 

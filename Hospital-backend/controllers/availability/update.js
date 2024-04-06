@@ -6,6 +6,8 @@ async function update(req, res) {
   try {
     const { userId, userType } = req.user;
 
+    const { availabilityId } = req.params;
+
     if (userType !== "Doctor") {
       return res.status(400).json({
         message: "Only doctors can update availability data.",
@@ -13,7 +15,7 @@ async function update(req, res) {
       });
     }
 
-    const { availabilityId, day, startTime, endTime } = req.body;
+    const { day, startTime, endTime } = req.body;
 
     const availability = await models.availabilities.findOne({
       where: { id: availabilityId, userId },
@@ -33,7 +35,7 @@ async function update(req, res) {
       endTime,
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "Availability updated successfully",
       data: availability,
     });

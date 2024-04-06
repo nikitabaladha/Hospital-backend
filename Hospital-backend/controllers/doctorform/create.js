@@ -50,7 +50,7 @@ async function create(req, res) {
       });
     }
 
-    let newDoctorform = await models.doctorforms.create({
+    let newDoctorForm = await models.doctorforms.create({
       userId: id,
       firstName,
       lastName,
@@ -69,16 +69,16 @@ async function create(req, res) {
 
     return res.status(200).json({
       hasError: false,
-      data: newDoctorform,
+      data: newDoctorForm,
       message: "Form submitted successfully!",
     });
   } catch (error) {
-    console.error("Error during submitting form:", error);
+    console.error("Error during submitting Doctor Form:", error);
 
     if (error.name === "SequelizeUniqueConstraintError") {
       return res.status(400).json({
         hasError: true,
-        message: "A Doctor form with for same user already exists",
+        message: "A Doctor Form with for same user already exists",
       });
     }
 

@@ -1,11 +1,12 @@
-// controllers/doctorform/deleteDoctorform.js
+// controllers/doctorForm/deleteDoctorForm.js
 
 const models = require("../../models");
 
-async function deleteDoctorform(req, res) {
+async function deleteDoctorForm(req, res) {
   try {
     const { userId: id, userType } = req.user;
-    const { doctorFormId } = req.body;
+
+    const { doctorFormId } = req.params;
 
     if (userType !== "Doctor") {
       return res.status(400).json({
@@ -43,4 +44,4 @@ async function deleteDoctorform(req, res) {
   }
 }
 
-module.exports = deleteDoctorform;
+module.exports = deleteDoctorForm;

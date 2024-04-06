@@ -46,5 +46,6 @@ module.exports = (sequelize, DataTypes) => {
   availability.associate = (models) => {
     availability.belongsTo(models.users, { foreignKey: "userId" });
   };
+
   return availability;
 };

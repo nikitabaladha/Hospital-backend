@@ -83,8 +83,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     },
   });
+
   doctorform.associate = (models) => {
     doctorform.belongsTo(models.users, { foreignKey: "userId" });
   };
+
   return doctorform;
 };

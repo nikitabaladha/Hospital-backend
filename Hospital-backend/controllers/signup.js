@@ -20,6 +20,7 @@ async function signup(req, res) {
       return res.status(400).json({ message: "Please provide user password" });
 
     const existingUser = await models.users.findOne({ where: { email } });
+
     if (existingUser) {
       return res
         .status(400)
@@ -36,7 +37,7 @@ async function signup(req, res) {
       salt,
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       hasError: false,
       message: "User created successfully",
       data: newUser,
@@ -44,7 +45,7 @@ async function signup(req, res) {
   } catch (error) {
     console.error("Error during signing up:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       hasError: true,
       message: "Internal server error",
       error: error.message,

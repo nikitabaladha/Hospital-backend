@@ -3,6 +3,8 @@
 const models = require("../../models");
 
 async function update(req, res) {
+  let dbTransactions;
+
   try {
     const { userId, userType } = req.user;
 
@@ -13,7 +15,9 @@ async function update(req, res) {
       });
     }
 
-    const { appointmentId, status } = req.body;
+    const { appointmentId } = req.params;
+
+    const { status } = req.body;
 
     const appointment = await models.appointments.findOne({
       where: { id: appointmentId, doctorId: userId },
@@ -39,33 +43,64 @@ async function update(req, res) {
       });
 
       if (!doctorInfo) {
-        return res
-          .status(500)
-          .json({ hasError: true, message: "Doctor information not found" });
+        return res.status(500).json({
+          hasError: true,
+          message: "Doctor information not found",
+        });
       }
+
       const doctorFees = doctorInfo.fees;
 
       const timeDifferenceInMinutes =
         (appointment.endTime - appointment.startTime) / (1000 * 60);
 
       const feeMultiplier = Math.ceil(timeDifferenceInMinutes / 30);
-      appointment.fees = doctorFees * feeMultiplier;
+      const fees = doctorFees * feeMultiplier;
+
+      dbTransactions = await models.sequelize.transaction({
+        autoCommit: false,
+      });
+
+      await appointment.update(
+        {
+          status,
+          fees,
+        },
+        { transaction: dbTransactions }
+      );
+
+      await dbTransactions.commit();
+    } else {
+      dbTransactions = await models.sequelize.transaction({
+        autoCommit: false,
+      });
+
+      await appointment.update(
+        {
+          status,
+        },
+        { transaction: dbTransactions }
+      );
+
+      await dbTransactions.commit();
     }
 
-    await appointment.update({
-      status,
-    });
-
-    res.status(200).json({
-      message: "Availability updated successfully",
+    return res.status(200).json({
+      message: "Appointment updated successfully",
       data: appointment,
     });
   } catch (error) {
-    console.error("Error during updating appointment", error);
+    if (dbTransactions) {
+      await dbTransactions.rollback();
 
-    return res
-      .status(500)
-      .json({ hasError: true, message: "Internal Server Error" });
+      console.error("Transaction rolled back:", error);
+    }
+    console.error("Error during updating appointment:", error);
+
+    return res.status(500).json({
+      hasError: true,
+      message: "Internal Server Error",
+    });
   }
 }
 

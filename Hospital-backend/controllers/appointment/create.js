@@ -96,7 +96,7 @@ async function create(req, res) {
       fees: 0,
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       hasError: false,
       message: "Appointment booked successfully",
       data: newAppointment,
@@ -104,7 +104,9 @@ async function create(req, res) {
   } catch (error) {
     console.error("Error booking appointment:", error);
 
-    res.status(500).json({ hasError: true, message: "Internal Server Error" });
+    return res
+      .status(500)
+      .json({ hasError: true, message: "Internal Server Error" });
   }
 }
 

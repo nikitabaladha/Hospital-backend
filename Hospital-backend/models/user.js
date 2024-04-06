@@ -61,5 +61,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "patientId",
     });
   };
+
   return user;
 };

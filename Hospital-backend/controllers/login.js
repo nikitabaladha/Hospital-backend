@@ -47,7 +47,7 @@ async function login(req, res) {
       }
     );
 
-    res.status(200).json({
+    return res.status(200).json({
       accessToken,
       hasError: false,
       message: "Login successful",
@@ -55,7 +55,7 @@ async function login(req, res) {
   } catch (error) {
     console.error("Error during login:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       hasError: true,
       message: "Internal server error",
       error: error.message,

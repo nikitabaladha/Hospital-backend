@@ -1,4 +1,4 @@
-// controllers/doctorform/update.js
+// controllers/doctorForm/update.js
 
 const models = require("../../models");
 
@@ -13,8 +13,9 @@ async function update(req, res) {
       });
     }
 
+    const { doctorFormId } = req.params;
+
     const {
-      doctorFormId,
       firstName,
       lastName,
       mobileNumber,

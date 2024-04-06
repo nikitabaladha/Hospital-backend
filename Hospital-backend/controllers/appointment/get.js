@@ -42,7 +42,7 @@ async function get(req, res) {
         status: appointment.status,
       };
     });
-    res.status(200).json({
+    return res.status(200).json({
       hasError: false,
       message: "Appointment data retrieved successfully",
       data: formattedAppointments,
@@ -50,7 +50,9 @@ async function get(req, res) {
   } catch (error) {
     console.error("Error fetching appointments:", error);
 
-    res.status(500).json({ hasError: true, message: "Internal Server Error" });
+    return res
+      .status(500)
+      .json({ hasError: true, message: "Internal Server Error" });
   }
 }
 

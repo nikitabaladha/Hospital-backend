@@ -13,7 +13,7 @@ async function deleteAvailability(req, res) {
       });
     }
 
-    const { availabilityId } = req.body;
+    const { availabilityId } = req.params;
 
     const availability = await models.availabilities.findOne({
       where: { id: availabilityId, userId },
@@ -21,21 +21,24 @@ async function deleteAvailability(req, res) {
 
     if (!availability) {
       return res.status(404).json({
-        error:
+        hasError: true,
+        message:
           "Availability not found or you don't have permission to delete it",
       });
     }
 
     await availability.destroy();
 
-    res.status(200).json({
+    return res.status(200).json({
       hasError: false,
       message: "Availability deleted successfully",
     });
   } catch (error) {
     console.error("Error during deleting availability data:", error);
 
-    res.status(500).json({ hasError: true, message: "Internal Server Error" });
+    return res
+      .status(500)
+      .json({ hasError: true, message: "Internal Server Error" });
   }
 }
 

@@ -19,6 +19,13 @@ async function create(req, res) {
       where: { id: userId },
     });
 
+    if (!user) {
+      return res.status(404).json({
+        hasError: true,
+        message: "User not found",
+      });
+    }
+
     let newAvailability = await models.availabilities.create({
       userId,
       day,
@@ -26,7 +33,7 @@ async function create(req, res) {
       endTime,
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       hasError: false,
       message: "Availability data created successfully",
       data: newAvailability,
