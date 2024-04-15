@@ -9,7 +9,7 @@ async function deleteDoctorForm(req, res) {
     const { doctorFormId } = req.params;
 
     if (userType !== "Doctor") {
-      return res.status(400).json({
+      return res.status(404).json({
         hasError: true,
         message: "Only doctors can delete doctor forms.",
       });

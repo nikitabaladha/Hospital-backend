@@ -24,7 +24,7 @@ async function signup(req, res) {
     if (existingUser) {
       return res
         .status(400)
-        .json({ error: "User with this email already exists" });
+        .json({ message: "User with this email already exists" });
     }
 
     const { hashedPassword, salt } = saltFunction.hashPassword(password);

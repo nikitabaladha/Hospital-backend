@@ -7,7 +7,7 @@ async function update(req, res) {
     const { userId: id, userType } = req.user;
 
     if (userType !== "Doctor") {
-      return res.status(400).json({
+      return res.status(404).json({
         message: "Only doctors can update doctor forms.",
         hasError: true,
       });

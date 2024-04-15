@@ -16,6 +16,7 @@ async function create(req, res) {
     const {
       firstName,
       lastName,
+      email,
       mobileNumber,
       dob,
       address,
@@ -32,6 +33,7 @@ async function create(req, res) {
     if (
       !firstName ||
       !lastName ||
+      !email ||
       !mobileNumber ||
       !dob ||
       !address ||
@@ -54,6 +56,7 @@ async function create(req, res) {
       userId: id,
       firstName,
       lastName,
+      email,
       mobileNumber,
       dob,
       address,
@@ -67,10 +70,15 @@ async function create(req, res) {
       qualification,
     });
 
+    await models.users.update(
+      { status: "Under review" },
+      { where: { id: id } }
+    );
+
     return res.status(200).json({
       hasError: false,
       data: newDoctorForm,
-      message: "Form submitted successfully!",
+      message: "Doctor Form submitted successfully!",
     });
   } catch (error) {
     console.error("Error during submitting Doctor Form:", error);
