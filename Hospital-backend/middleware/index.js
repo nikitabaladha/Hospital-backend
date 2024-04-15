@@ -25,6 +25,8 @@ async function middleware(req, res, next) {
       });
     }
 
+    console.log(userDetails);
+
     req.user = userDetails;
 
     next();
