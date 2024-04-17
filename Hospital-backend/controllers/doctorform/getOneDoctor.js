@@ -1,12 +1,13 @@
-// controllers/doctorForm/get.js
+// controllers/doctorForm/getOneDoctor.js
 
 const models = require("../../models");
 
-async function get(req, res) {
+async function getOneDoctor(req, res) {
   try {
-    const { userId: id } = req.user;
+    const { doctorId } = req.params;
 
-    const doctors = await models.doctorforms.findAll({
+    const doctor = await models.doctorforms.findOne({
+      where: { userId: doctorId },
       include: [
         {
           model: models.users,
@@ -27,28 +28,28 @@ async function get(req, res) {
       ],
     });
 
-    if (!doctors.length) {
+    if (!doctor) {
       return res.status(404).json({
-        message: "Doctors not found.",
+        message: "Doctor not found.",
         hasError: true,
       });
     }
 
-    const formattedDoctors = doctors.map((doc) => ({
-      firstName: doc.firstName,
-      lastName: doc.lastName,
-      mobileNumber: doc.mobileNumber,
-      email: doc.user.email,
-      fees: doc.fees,
-      speciality: doc.speciality,
-      experience: doc.experience,
-      qualification: doc.qualification,
-      id: doc.userId,
-    }));
+    const formattedDoctor = {
+      firstName: doctor.firstName,
+      lastName: doctor.lastName,
+      mobileNumber: doctor.mobileNumber,
+      email: doctor.user.email,
+      fees: doctor.fees,
+      speciality: doctor.speciality,
+      experience: doctor.experience,
+      qualification: doctor.qualification,
+      id: doctor.userId,
+    };
 
     return res.status(200).json({
       hasError: false,
-      data: formattedDoctors,
+      data: formattedDoctor,
       message: "Doctor details retrieved successfully!",
     });
   } catch (error) {
@@ -60,4 +61,4 @@ async function get(req, res) {
   }
 }
 
-module.exports = get;
+module.exports = getOneDoctor;
