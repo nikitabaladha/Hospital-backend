@@ -18,7 +18,7 @@ async function middleware(req, res, next) {
     const userDetails = jwt.verify(accessToken, config.jwtSecret);
 
     if (!userDetails) {
-      return res.status(400).json({
+      return res.status(401).json({
         hasError: true,
         error: "Bad Request",
         message: "Access token expired or invalid",

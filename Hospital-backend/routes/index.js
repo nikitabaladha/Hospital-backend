@@ -6,7 +6,7 @@ module.exports = (app) => {
   app.post("/api/login", Controller.login);
 
   app.post("/api/doctorForm", Middleware, Controller.doctorForm.create);
-  app.get("/api/doctorForm", Middleware, Controller.doctorForm.get);
+  app.get("/api/doctorForm", Controller.doctorForm.get);
   app.get("/api/doctorForm/:doctorId", Middleware, Controller.doctorForm.get);
   app.put(
     "/api/doctorForm/:doctorFormId",

@@ -86,7 +86,7 @@ async function create(req, res) {
     if (error.name === "SequelizeUniqueConstraintError") {
       return res.status(400).json({
         hasError: true,
-        message: "A Doctor Form with for same user already exists",
+        message: "This Doctor Form with same user already exists",
       });
     }
 

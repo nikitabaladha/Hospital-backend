@@ -20,7 +20,7 @@ async function get(req, res) {
     if (!availabilities || availabilities.length === 0) {
       return res.status(404).json({
         hasError: true,
-        message: "No availability data found for the authenticated user",
+        message: "No availability data found of this Doctor",
       });
     }
 

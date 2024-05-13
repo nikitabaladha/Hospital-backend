@@ -4,8 +4,6 @@ const models = require("../../models");
 
 async function get(req, res) {
   try {
-    const { userId: id } = req.user;
-
     const doctors = await models.doctorforms.findAll({
       include: [
         {

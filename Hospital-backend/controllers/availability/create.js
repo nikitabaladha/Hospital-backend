@@ -33,7 +33,7 @@ async function create(req, res) {
       endTime,
     });
 
-    return res.status(201).json({
+    return res.status(200).json({
       hasError: false,
       message: "Availability data created successfully",
       data: newAvailability,

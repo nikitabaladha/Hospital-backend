@@ -96,7 +96,7 @@ async function create(req, res) {
       fees: 0,
     });
 
-    return res.status(201).json({
+    return res.status(200).json({
       hasError: false,
       message: "Appointment booked successfully",
       data: newAppointment,
