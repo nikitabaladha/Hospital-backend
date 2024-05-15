@@ -7,7 +7,11 @@ module.exports = (app) => {
 
   app.post("/api/doctorForm", Middleware, Controller.doctorForm.create);
   app.get("/api/doctorForm", Controller.doctorForm.get);
-  app.get("/api/doctorForm/:doctorId", Middleware, Controller.doctorForm.get);
+  app.get(
+    "/api/doctorForm/:doctorId",
+    Middleware,
+    Controller.doctorForm.getOneDoctor
+  );
   app.put(
     "/api/doctorForm/:doctorFormId",
     Middleware,
