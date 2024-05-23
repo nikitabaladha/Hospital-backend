@@ -39,7 +39,7 @@ async function signup(req, res) {
 
     return res.status(200).json({
       hasError: false,
-      message: "User created successfully",
+      message: "Signup successful",
       data: newUser,
     });
   } catch (error) {

@@ -3,7 +3,7 @@
 const jwt = require("jsonwebtoken");
 const models = require("../models");
 const saltFunction = require("../validator/saltFunction");
-const config = require("../config/config.js");
+const config = require("../config/config.json");
 
 async function login(req, res) {
   try {

@@ -1,7 +1,7 @@
 // middleware/index.js
 
 const jwt = require("jsonwebtoken");
-const config = require("../config/config.js");
+const config = require("../config/config.json");
 
 async function middleware(req, res, next) {
   const accessToken = req.headers.access_token;
