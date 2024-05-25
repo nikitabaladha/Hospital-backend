@@ -1,11 +1,11 @@
 // models/doctorform.js
 
 "use strict";
-const { DataTypes, Sequelize } = require("sequelize");
+const { DataTypes } = require("sequelize");
 const { v4: uuidv4 } = require("uuid");
 const model = require("../models");
 
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize) => {
   const doctorform = sequelize.define("doctorforms", {
     id: {
       allowNull: false,

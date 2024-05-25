@@ -22,9 +22,10 @@ async function signup(req, res) {
     const existingUser = await models.users.findOne({ where: { email } });
 
     if (existingUser) {
-      return res
-        .status(400)
-        .json({ message: "User with this email already exists" });
+      return res.status(400).json({
+        hasError: true,
+        message: "User with this email already exists",
+      });
     }
 
     const { hashedPassword, salt } = saltFunction.hashPassword(password);
@@ -36,6 +37,11 @@ async function signup(req, res) {
       password: hashedPassword,
       salt,
     });
+
+    // Remove hashedPassword and salt before sending response
+    const responseUser = { ...newUser };
+    delete responseUser.hashedPassword;
+    delete responseUser.salt;
 
     return res.status(200).json({
       hasError: false,

@@ -1,11 +1,14 @@
 // models/user.js
 
 "use strict";
-const { v4: uuidv4 } = require("uuid");
-const { DataTypes, Sequelize } = require("sequelize");
-const model = require("../models");
+// const { v4: uuidv4 } = require("uuid");
+// const { DataTypes, Sequelize } = require("sequelize");
+// const model = require("../models");
 
-module.exports = (sequelize, DataTypes) => {
+const { v4: uuidv4 } = require("uuid");
+const { DataTypes } = require("sequelize");
+
+module.exports = (sequelize) => {
   const user = sequelize.define("users", {
     id: {
       allowNull: false,
@@ -60,6 +63,7 @@ module.exports = (sequelize, DataTypes) => {
     user.hasMany(models.appointments, {
       foreignKey: "patientId",
     });
+    user.hasMany(models.availabilities, { foreignKey: "userId" });
   };
 
   return user;

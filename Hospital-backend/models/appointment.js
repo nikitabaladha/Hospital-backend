@@ -1,16 +1,16 @@
 // models/appointments
 
 "use strict";
-const { Sequelize, DataTypes } = require("sequelize");
+const { DataTypes } = require("sequelize");
 const { v4: uuidv4 } = require("uuid");
 const model = require("../models");
 
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize) => {
   const appointment = sequelize.define("appointments", {
     id: {
       allowNull: false,
       primaryKey: true,
-      type: Sequelize.UUID,
+      type: DataTypes.UUID,
       defaultValue: () => uuidv4(),
     },
     doctorId: {
