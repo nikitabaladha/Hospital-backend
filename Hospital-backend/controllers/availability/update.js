@@ -6,7 +6,9 @@ const validateAvailability = require("../../validator/validateAvailability");
 async function update(req, res) {
   try {
     const { userId, userType } = req.user;
-    const { id, day, startTime, endTime } = req.body;
+    const { day, startTime, endTime } = req.body;
+
+    const { availabilityId } = req.params;
 
     if (userType !== "Doctor") {
       return res.status(403).json({
@@ -42,7 +44,7 @@ async function update(req, res) {
     }
 
     const availability = await models.availabilities.findOne({
-      where: { id, userId },
+      where: { id: availabilityId, userId },
     });
 
     if (!availability) {

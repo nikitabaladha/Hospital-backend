@@ -24,11 +24,7 @@ module.exports = (app) => {
   );
 
   app.post("/api/availability", Middleware, Controller.availability.create);
-  // app.get(
-  //   "/api/availability/:doctorId",
-  //   Middleware,
-  //   Controller.availability.get
-  // );
+
   app.get("/api/availability", Middleware, Controller.availability.get);
   app.put(
     "/api/availability/:availabilityId",
