@@ -3,7 +3,6 @@
 "use strict";
 const { DataTypes } = require("sequelize");
 const { v4: uuidv4 } = require("uuid");
-const model = require("../models");
 
 module.exports = (sequelize) => {
   const appointment = sequelize.define("appointments", {

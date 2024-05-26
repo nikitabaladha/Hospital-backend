@@ -1,9 +1,6 @@
 // models/user.js
 
 "use strict";
-// const { v4: uuidv4 } = require("uuid");
-// const { DataTypes, Sequelize } = require("sequelize");
-// const model = require("../models");
 
 const { v4: uuidv4 } = require("uuid");
 const { DataTypes } = require("sequelize");

@@ -1,50 +1,75 @@
 // controllers/availability/update.js
 
 const models = require("../../models");
+const validateAvailability = require("../../validator/validateAvailability");
 
 async function update(req, res) {
   try {
     const { userId, userType } = req.user;
-
-    const { availabilityId } = req.params;
+    const { id, day, startTime, endTime } = req.body;
 
     if (userType !== "Doctor") {
-      return res.status(400).json({
-        message: "Only doctors can update availability data.",
+      return res.status(403).json({
         hasError: true,
+        message: "Only Doctors are allowed to update availability.",
       });
     }
 
-    const { day, startTime, endTime } = req.body;
+    const validationErrors = validateAvailability(day, startTime, endTime);
+    if (validationErrors.length > 0) {
+      return res.status(400).json({
+        hasError: true,
+        message: validationErrors.join(", "),
+      });
+    }
+
+    const user = await models.users.findOne({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        hasError: true,
+        message: "User not found",
+      });
+    }
+
+    if (user.status !== "Approved") {
+      return res.status(403).json({
+        hasError: true,
+        message: "Only approved doctors can update availability.",
+      });
+    }
 
     const availability = await models.availabilities.findOne({
-      where: { id: availabilityId, userId },
+      where: { id, userId },
     });
 
     if (!availability) {
       return res.status(404).json({
         hasError: true,
-        message:
-          "Availability not found or you don't have permission to update it",
+        message: "Availability not found",
       });
     }
 
-    await availability.update({
-      day,
-      startTime,
-      endTime,
-    });
+    availability.day = day;
+    availability.startTime = startTime;
+    availability.endTime = endTime;
+
+    await availability.save();
 
     return res.status(200).json({
-      message: "Availability updated successfully",
+      hasError: false,
+      message: "Availability data updated successfully",
       data: availability,
     });
   } catch (error) {
     console.error("Error during updating availability", error);
 
-    return res
-      .status(500)
-      .json({ hasError: true, message: "Internal Server Error" });
+    return res.status(500).json({
+      hasError: true,
+      message: "Internal Server Error",
+    });
   }
 }
 

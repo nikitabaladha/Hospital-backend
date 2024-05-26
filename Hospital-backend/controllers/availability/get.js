@@ -4,17 +4,17 @@ async function get(req, res) {
   try {
     const { userId } = req.user;
 
-    const { doctorId } = req.params;
+    // const { doctorId } = req.params;
 
-    if (!doctorId) {
-      return res.status(400).json({
-        hasError: true,
-        message: "doctorId is required",
-      });
-    }
+    // if (!doctorId) {
+    //   return res.status(400).json({
+    //     hasError: true,
+    //     message: "doctorId is required",
+    //   });
+    // }
 
     const availabilities = await models.availabilities.findAll({
-      where: { userId: doctorId },
+      where: { userId },
     });
 
     if (!availabilities || availabilities.length === 0) {
